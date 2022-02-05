@@ -1,18 +1,18 @@
 package io.ernest.reddit.domain;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Data
+@RequiredArgsConstructor
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
-public class Link {
+public class Link extends Auditable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,4 +22,10 @@ public class Link {
     @NonNull
     private String url;
 
+    @OneToMany(mappedBy = "link")
+    private List<Comment> comments = new ArrayList<>();
+
+    public void addComment(Comment comment) {
+        comments.add(comment);
+    }
 }

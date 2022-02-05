@@ -1,21 +1,24 @@
 package io.ernest.reddit.domain;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
-@Data
+@RequiredArgsConstructor
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
-public class Comment {
+public class Comment extends Auditable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NonNull
     private String body;
 
+    @ManyToOne
+    @NonNull
+    private Link link;
 }
